@@ -5,6 +5,9 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('public'));
+app.use(bodyParser.json());
+
 
 const MongoClient = require("mongodb").MongoClient;
 var db;
@@ -31,12 +34,37 @@ app.get('/', (req, res) => {
 
 
 app.post('/quotes', (req, res) => {
-    db.collection('quotes').save(req.body, (err, result) => {
-        if (err) {
-            return console.log(err);
+    db.collection('quotes')
+      .findOneAndUpdate({ name: req.body.name }, {
+        $set: {
+          name: req.body.name,
+          quote: req.body.quote
         }
-        // console.log('saved to database')
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) {
+            return res.send(err);
+        }
         res.redirect('/');
-    });
+      });
 });
+
+app.delete('/quotes', (req, res) => {
+
+    db.collection('quotes')
+    .findOneAndDelete(
+        {
+            name: req.body.name,
+            quote: req.body.quote
+        },
+        (err, result) => {
+            if (err) {
+                return res.send(500, err);
+            }
+            // res.redirect('/');
+            res.send({status: 'Successfully deleted'});
+        });
+})
 
