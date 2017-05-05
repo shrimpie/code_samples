@@ -1,0 +1,21 @@
+{
+  "name": "gulp_example",
+  "version": "1.0.0",
+  "description": "Template engine example using Nunjucks and Gulp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Template",
+    "Engine",
+    "Nunjucks",
+    "Gulp"
+  ],
+  "author": "Zhenyu Yang",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp-data": "^1.2.1",
+    "gulp-nunjucks-render": "^2.2.1"
+  }
+}
