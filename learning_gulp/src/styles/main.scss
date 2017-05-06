@@ -1,0 +1,13 @@
+$my_base_color: #fafafa;
+
+body {
+    color: $my_base_color;
+    opacity: .5;
+    box-sizing: border-box;
+    transform: scale(.5);
+    display: flex;
+}
+
+a {
+    transition: transform 1s;
+}

@@ -1,0 +1,12 @@
+body {
+  color: #fafafa;
+  opacity: .5;
+  box-sizing: border-box;
+  transform: scale(0.5);
+  display: -ms-flexbox;
+  display: flex;
+}
+
+a {
+  transition: transform 1s;
+}
