@@ -1,6 +1,4 @@
-node_express/node_modules
+*/node_modules
 node_express/.env
-nunjucks_example/node_modules
-learning_gulp/node_modules
 learning_gulp/.sass-cache
 
