@@ -5,6 +5,7 @@ Useful code samples
 2. Nunjucks sample
 3. Gulp example: learning_gulp
 4. Gulp example 2: frontend_workflow
+5. Angular & Gulp example
 
 
 
