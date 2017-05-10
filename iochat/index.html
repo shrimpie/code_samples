@@ -3,22 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>IO chat</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/socket.io/socket.io.js">
-    </script>
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <style>
-      body {
-        margin-top: 30px;
-      }
-      #messageArea {
-        display: none;
-      }
+      body { margin-top: 30px; }
+      #messageArea { display: none; }
     </style>
   </head>
   <body>
     <div class="container">
-
       <div id="userFormArea" class="row">
         <div class="col-md-12">
           <form id="userForm">
@@ -27,11 +24,10 @@
               <input class="form-control" id="username" />
               <br />
               <input type="submit" class="btn btn-primary" value="Login">
-            </div>
-          </form>
-        </div>
-      </div>
-
+            </div><!-- form-group -->
+          </form><!-- userForm -->
+        </div><!-- col-md-12 -->
+      </div><!-- userFormArea -->
 
       <div id="messageArea" class="row">
         <div class="col-md-4">
@@ -39,10 +35,9 @@
             <h3>Online users</h3>
             <ul class="list-group" id="users"></ul>
           </div>
-        </div>
+        </div><!-- col-md-4 -->
         <div class="col-md-8">
           <div class="chat" id="chat"></div>
-
           <form id="messageForm">
             <div class="form-group">
               <label>Enter message</label>
@@ -50,11 +45,11 @@
               <br />
               <input type="submit" class="btn btn-primary" value="Send message">
             </div>
-          </form>
-        </div>
+          </form><!-- messageForm -->
+        </div><!-- col-md-8 -->
+      </div><!-- messageArea -->
+    </div><!-- container -->
 
-      </div><!-- row -->
-    </div>
     <script type="text/javascript">
       $(function() {
         var socket = io.connect();
@@ -67,6 +62,7 @@
         var $users = $('#users');
         var $username = $('#username');
 
+        // submit new message
         $messageForm.submit(function(e) {
           e.preventDefault();
           // console.log('submitted');
@@ -74,28 +70,30 @@
           $message.val('');
         });
 
-        socket.on('new message', function(data) {
-          $chat.append('<div class="well"><strong>' + data.user + '</strong>: ' + data.msg + '</div>');
-        });
-
+        // handles when a new submit its name to the server
         $userForm.submit(function(e) {
           e.preventDefault();
-          // console.log('submitted');
+          // server returns 'true' when receive a 'new user' event
           socket.emit('new user', $username.val(), function(data) {
-            if(data) {
-              // console.log("data:" + data);
-              $userFormArea.hide();
-              $messageArea.show();
+            if(data) { // data: true
+              $userFormArea.hide(); // hide user login panel
+              $messageArea.show(); // show the message area
             }
           });
-          $username.val('');
+          $username.val(''); // clear username
         });
 
-        socket.on('get users', function(data) {
+        // show new message
+        socket.on('new message', function(data) {
+          $chat.append('<div class="well"><strong>' + data.user + '</strong>: '
+            + data.msg + '</div>');
+        });
+
+        // update users, when a new user is added.
+        socket.on('get users', function(users) {
           var html = '';
-          console.log('users: ' + data);
-          for(i = 0; i < data.length; ++i) {
-            html += '<li class="list-group-item">' + data[i] + '</li>';
+          for(i = 0; i < users.length; ++i) {
+            html += '<li class="list-group-item">' + users[i] + '</li>';
           }
           $users.html(html);
         });
