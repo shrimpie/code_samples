@@ -8,3 +8,4 @@ Useful code examples
 5. Angular & Gulp example
 6. Node & redis example
 7. Add an socket.io example
+8. Javascript todo list

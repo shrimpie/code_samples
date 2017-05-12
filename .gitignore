@@ -1,4 +1,4 @@
 */node_modules
 node_express/.env
 learning_gulp/.sass-cache
-
+.DS_store
